@@ -1,0 +1,52 @@
+<?php
+
+/**
+ * @file
+ * Check requirements.
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function vue_js_requirements($phase) {
+  $requirements = array();
+
+  // Report the version of VUE.js.
+  if ($phase == 'runtime') {
+    drupal_load('module', 'libraries');
+    $vue_js = libraries_detect(VUEJS_LIBRARY);
+
+    $requirements[VUEJS_LIBRARY] = array(
+      'title' => $vue_js['name'],
+    );
+
+    // Check VUE.js using the CDN.
+    if (variable_get('vue_js_version', VUEJS_VERSION_CDN) == VUEJS_VERSION_CDN) {
+      $requirements[VUEJS_LIBRARY]['severity'] = REQUIREMENT_OK;
+      $requirements[VUEJS_LIBRARY]['value']    = t('Using CDN version');
+    }
+    else {
+      $requirements[VUEJS_LIBRARY]['severity'] = $vue_js['installed'] ? REQUIREMENT_OK : REQUIREMENT_WARNING;
+      $requirements[VUEJS_LIBRARY]['value']    = $vue_js['installed'] ? $vue_js['version'] : $vue_js['error message'];
+    }
+  }
+
+  return $requirements;
+}
+
+/**
+ * Implementation of hook_install
+ *
+ */
+function vue_js_install() {
+  variable_set('vue_js_version', VUEJS_VERSION_CDN);
+}
+
+/**
+ * Implementation of hook_uninstall
+ *
+ */
+function vue_js_uninstall() {
+  // Delete set variables.
+  variable_del('vue_js_version');
+}

@@ -1,0 +1,14 @@
+# Ignore default text files
+/CHANGELOG.txt
+/COPYRIGHT.txt
+/INSTALL*.txt
+/LICENSE.txt
+/MAINTAINERS.txt
+/UPGRADE.txt
+/README.txt
+
+# Ignore vendors
+node_modules
+
+# Ignore developer settings
+.idea

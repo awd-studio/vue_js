@@ -1,0 +1,5 @@
+name           = VUE.js
+description    = Provides an API for using the <a href="https://github.com/vue_js/vue" target="_blank">VUE.js</a> library.
+core           = 7.x
+
+dependencies[] = libraries
